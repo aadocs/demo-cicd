@@ -10,9 +10,13 @@
         version: "{{ awx_webhook_event_ref }}"
 
     - name: Show main project
-      ansible.builtin.shell:
-        chdir: /tmp/project
-        cmd: cat ./project.sh
+      ansible.builtin.debug:
+        msg: "Project content is {{ lookup('ansible.builtin.file', '/tmp/project/project.sh') }}"
+
+    - name: Make file executable
+      ansible.builtin.file:
+        path: /tmp/project/project.sh
+        mode: +x
 
     - name: Check main project
       ansible.builtin.shell:
